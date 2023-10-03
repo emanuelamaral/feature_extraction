@@ -8,14 +8,15 @@ from PIL import Image
 class ExtracaoDeCaracteristica:
     def __init__(self, diretorio):
         self.diretorio = diretorio
-        self.converter_imagens()
+       # self.converter_imagens()
         self.imagens = self.ler_imagens_diretorio()
         self.process_estruturas()
-        # self.process_glcm()
+        self.process_glcm()
 
     def process_glcm(self):
         glcm_processor = GLCMProcessor(self.imagens)
-        glcm_processor.process()
+        glcm_processor.calc_glcm()
+
 
     def process_estruturas(self):
         estrutura = Estruturas(self.imagens)
@@ -38,9 +39,9 @@ class ExtracaoDeCaracteristica:
 
     def ler_imagens_diretorio(self):
         imagens = []
-        for filename in os.listdir("maiusculas_convertidas"):
-            if filename.endswith('.png'):
-                caminho_completo = os.path.join("maiusculas_convertidas", filename)
+        for filename in os.listdir(diretorio):
+            if filename.endswith('.pgm'):
+                caminho_completo = os.path.join(diretorio, filename)
                 img = cv2.imread(caminho_completo, cv2.IMREAD_GRAYSCALE)
 
                 if img is not None:
